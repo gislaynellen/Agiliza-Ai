@@ -7,26 +7,294 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos específicos para index.html */
+        .hero {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn-large {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+        }
+        
+        .features {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray-color);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .feature-card p {
+            color: var(--gray-color);
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features {
+                padding: 3rem 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <!-- O conteúdo será carregado dinamicamente pelo router -->
-        <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <p>Carregando Agiliza Aí...</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <h1>Agiliza Aí</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i> Início
+                    </a>
+                    <a href="login.html" class="nav-link">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </a>
+                    <a href="cadastro.html" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Cadastrar
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Transforme sua visão em ação</h1>
+                <p>O Canvas de Ciclo de Vida que vai agilizar seu planejamento estratégico. Organize, visualize e execute suas ideias de forma eficiente.</p>
+                <div class="hero-buttons">
+                    <a href="canvas.html" class="btn btn-primary btn-large">
+                        <i class="fas fa-play-circle"></i> Começar Agora
+                    </a>
+                    <a href="#features" class="btn btn-secondary btn-large">
+                        <i class="fas fa-info-circle"></i> Saiba Mais
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Por que usar o Agiliza Aí?</h2>
+            <p class="section-subtitle">Tudo que você precisa para planejar e executar sua estratégia</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Canvas Intuitivo</h3>
+                    <p>Interface visual organizada em 9 blocos estratégicos para mapear todo o ciclo de vida do seu negócio.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Salvamento Automático</h3>
+                    <p>Seu progresso é salvo automaticamente. Nunca perca suas ideias e continue de onde parou.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <h3>Privacidade Garantida</h3>
+                    <p>Seus dados são armazenados localmente com segurança. Total controle sobre suas informações.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Edição em Tempo Real</h3>
+                    <p>Edite diretamente no canvas com interface responsiva que se adapta a qualquer dispositivo.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3>Exportação Fácil</h3>
+                    <p>Exporte seu canvas como JSON para backup ou compartilhamento com sua equipe.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Para Todos</h3>
+                    <p>Perfeito para empreendedores, startups, PMEs e qualquer pessoa que precise organizar ideias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo" style="color: white; margin-bottom: 1.5rem;">
+                    <i class="fas fa-bolt"></i>
+                    <h1 style="color: white;">Agiliza Aí</h1>
+                </div>
+                <p>Ferramenta gratuita para planejamento estratégico e mapeamento de ciclo de vida.</p>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                    &copy; 2024 Agiliza Aí. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="assets/js/utils.js"></script>
-    <script src="assets/js/persistence.js"></script>
     <script src="assets/js/auth.js"></script>
-    <script src="assets/js/router.js"></script>
-    <script src="assets/js/canvas.js"></script>
     
     <script>
-        // Inicializar a aplicação quando o DOM estiver carregado
+        // Verificar se usuário está logado para ajustar navegação
         document.addEventListener('DOMContentLoaded', function() {
-            Router.init();
+            if (Auth.isAuthenticated()) {
+                const user = Auth.getCurrentUser();
+                const navLinks = document.querySelector('.nav-links');
+                
+                navLinks.innerHTML = `
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i> Início
+                    </a>
+                    <a href="canvas.html" class="nav-link">
+                        <i class="fas fa-project-diagram"></i> Meu Canvas
+                    </a>
+                    <div class="user-info" style="display: flex; align-items: center; gap: 10px;">
+                        <div class="user-avatar">${user.name.charAt(0)}</div>
+                        <span>Olá, ${user.name.split(' ')[0]}</span>
+                    </div>
+                    <a href="#" id="logoutBtn" class="btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </a>
+                `;
+                
+                document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Deseja sair?')) {
+                        Auth.logout();
+                        window.location.reload();
+                    }
+                });
+            }
         });
     </script>
 </body>
