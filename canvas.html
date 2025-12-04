@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas - Agiliza Aí</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <h1>Agiliza Aí</h1>
+                </div>
+                
+                <div class="user-menu">
+                    <div class="user-info" id="userInfo">
+                        <!-- Carregado dinamicamente -->
+                    </div>
+                    <button id="logoutBtn" class="btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-container">
+        <div class="container">
+            <!-- Título e Status -->
+            <div class="page-header">
+                <div>
+                    <h1>Canvas de Ciclo de Vida</h1>
+                    <p class="page-subtitle">Preencha cada seção com as informações do seu projeto ou negócio</p>
+                </div>
+                
+                <div class="save-status" id="saveStatus">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Salvo automaticamente</span>
+                </div>
+            </div>
+            
+            <!-- Canvas Grid -->
+            <div class="canvas-container">
+                <div class="canvas-grid" id="canvasGrid">
+                    <!-- Os cards serão carregados dinamicamente -->
+                </div>
+                
+                <!-- Ações do Canvas -->
+                <div class="canvas-actions">
+                    <button id="saveCanvasBtn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar Agora
+                    </button>
+                    <button id="resetCanvasBtn" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Limpar Canvas
+                    </button>
+                    <button id="exportJsonBtn" class="btn btn-success">
+                        <i class="fas fa-download"></i> Exportar JSON
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Visualizador JSON -->
+            <div class="json-viewer" id="jsonViewer" style="display: none;">
+                <div class="json-header">
+                    <h3>Dados do Canvas (JSON)</h3>
+                    <button id="closeJsonBtn" class="btn btn-icon">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <pre id="jsonContent"></pre>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal" id="confirmModal" style="display: none;">
+        <div class="modal-content">
+            <h3 id="modalTitle">Confirmar ação</h3>
+            <p id="modalMessage">Tem certeza que deseja realizar esta ação?</p>
+            <div class="modal-actions">
+                <button id="modalCancelBtn" class="btn btn-secondary">Cancelar</button>
+                <button id="modalConfirmBtn" class="btn btn-danger">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/persistence.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/canvas.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se o usuário está autenticado
+            if (!Auth.isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Carregar informações do usuário
+            loadUserInfo();
+            
+            // Inicializar o canvas
+            Canvas.init();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Carregar dados salvos do usuário
+            loadUserCanvas();
+        });
+        
+        function loadUserInfo() {
+            const user = Auth.getCurrentUser();
+            const userInfo = document.getElementById('userInfo');
+            
+            if (user) {
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                userInfo.innerHTML = `
+                    <div class="user-avatar">${initials.substring(0, 2)}</div>
+                    <div class="user-details">
+                        <span class="user-name">${user.name}</span>
+                        <span class="user-email">${user.email}</span>
+                    </div>
+                `;
+            }
+        }
+        
+        function setupEventListeners() {
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja sair?')) {
+                    Auth.logout();
+                    window.location.href = 'login.html';
+                }
+            });
+            
+            // Salvar canvas
+            document.getElementById('saveCanvasBtn').addEventListener('click', function() {
+                Canvas.save();
+            });
+            
+            // Resetar canvas
+            document.getElementById('resetCanvasBtn').addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja limpar todo o canvas? Esta ação não pode ser desfeita.')) {
+                    Canvas.reset();
+                }
+            });
+            
+            // Exportar JSON
+            document.getElementById('exportJsonBtn').addEventListener('click', function() {
+                Canvas.exportToJson();
+            });
+            
+            // Fechar visualizador JSON
+            document.getElementById('closeJsonBtn').addEventListener('click', function() {
+                document.getElementById('jsonViewer').style.display = 'none';
+            });
+        }
+        
+        function loadUserCanvas() {
+            const canvasData = Persistence.loadCanvas();
+            if (canvasData) {
+                Canvas.load(canvasData);
+            }
+        }
+    </script>
+</body>
+</html>
