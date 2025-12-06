@@ -1,1 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Canvas - Agiliza Aí</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/canvas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Com lógica de usuário logado via JS) -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bolt"></i>
+                    <h1>Agiliza Aí</h1>
+                </div>
+                <!-- O menu será preenchido dinamicamente pelo auth.js se estiver logado -->
+                <div class="nav-links" id="navLinks">
+                    <!-- Conteúdo injetado via JS -->
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span id="userNameDisplay">Carregando...</span>
+                        <a href="#" id="logoutBtn" class="btn btn-secondary btn-sm">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
+    <!-- Barra de Ferramentas do Canvas -->
+    <div class="canvas-toolbar">
+        <div class="container toolbar-content">
+            <div class="project-info">
+                <input type="text" class="project-title" value="Meu Projeto Sem Título" placeholder="Nome do Projeto">
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary"><i class="fas fa-save"></i> Salvar</button>
+                <button class="btn btn-primary"><i class="fas fa-download"></i> Exportar JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- O Grid do Canvas (Layout Base) -->
+    <div class="canvas-wrapper">
+        <div class="canvas-grid">
+            <!-- 1. Parcerias Principais -->
+            <div class="canvas-block block-kp">
+                <div class="block-header">
+                    <i class="fas fa-handshake"></i> Parcerias Principais
+                </div>
+                <div class="block-content" contenteditable="true">
+                    <!-- Post-its virão aqui -->
+                </div>
+            </div>
+
+            <!-- 2. Atividades Chave -->
+            <div class="canvas-block block-ka">
+                <div class="block-header">
+                    <i class="fas fa-tasks"></i> Atividades Chave
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 3. Recursos Principais -->
+            <div class="canvas-block block-kr">
+                <div class="block-header">
+                    <i class="fas fa-gem"></i> Recursos Principais
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 4. Proposta de Valor -->
+            <div class="canvas-block block-vp">
+                <div class="block-header">
+                    <i class="fas fa-gift"></i> Proposta de Valor
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 5. Relacionamento com Cliente -->
+            <div class="canvas-block block-cr">
+                <div class="block-header">
+                    <i class="fas fa-heart"></i> Relacionamento
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 6. Canais -->
+            <div class="canvas-block block-ch">
+                <div class="block-header">
+                    <i class="fas fa-truck"></i> Canais
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 7. Segmentos de Clientes -->
+            <div class="canvas-block block-cs">
+                <div class="block-header">
+                    <i class="fas fa-users"></i> Segmentos de Clientes
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 8. Estrutura de Custos -->
+            <div class="canvas-block block-cst">
+                <div class="block-header">
+                    <i class="fas fa-tags"></i> Estrutura de Custos
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 9. Fontes de Receita -->
+            <div class="canvas-block block-rs">
+                <div class="block-header">
+                    <i class="fas fa-cash-register"></i> Fontes de Receita
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/canvas.js"></script>
+    
+    <script>
+        // Verificação imediata de autenticação
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Auth !== 'undefined') {
+                Auth.requireAuth(); // Redireciona se não estiver logado
+                
+                // Atualiza nome do usuário no header
+                const user = Auth.getCurrentUser();
+                if (user) {
+                    document.getElementById('userNameDisplay').textContent = `Olá, ${user.name.split(' ')[0]}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+.canvas-toolbar {
+    background-color: #fff;
+    border-bottom: 1px solid #e1e1e1;
+    padding: 1rem 0;
+    margin-bottom: 20px;
+}
+
+.toolbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: var(--dark-color);
+    width: 300px;
+}
+
+.project-title:focus {
+    outline: none;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.canvas-wrapper {
+    max-width: 1400px; 
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    height: calc(100vh - 160px);
+}
+
+.canvas-grid {
+    display: grid;
+    height: 100%;
+    gap: 10px;
+    
+    grid-template-columns: repeat(5, 1fr); 
+    grid-template-rows: 2fr 2fr 1fr;
+    
+    grid-template-areas:
+        "kp ka vp cr cs"
+        "kp kr vp ch cs"
+        "cst cst cst rs rs";
+}
+
+.canvas-block {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+
+.canvas-block:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-color: #ccc;
+}
+
+.block-header {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+}
+
+.block-header i {
+    color: var(--primary-color);
+}
+
+.block-content {
+    flex: 1;
+    overflow-y: auto;
+    outline: none;
+    padding: 5px;
+}
+
+.block-content:empty::before {
+    content: "Clique para adicionar...";
+    color: #ccc;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.block-kp { grid-area: kp; }
+.block-ka { grid-area: ka; }
+.block-kr { grid-area: kr; }
+.block-vp { grid-area: vp; }
+.block-cr { grid-area: cr; }
+.block-ch { grid-area: ch; }
+.block-cs { grid-area: cs; }
+.block-cst { grid-area: cst; }
+.block-rs { grid-area: rs; }
+
+@media (max-width: 1024px) {
+    .canvas-wrapper {
+        height: auto;
+    }
+    
+    .canvas-grid {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .canvas-block {
+        min-height: 200px;
+    }
+}
