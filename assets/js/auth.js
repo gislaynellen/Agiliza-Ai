@@ -40,7 +40,7 @@ const Auth = {
         if (user) {
             localStorage.setItem(this.CURRENT_USER_KEY, JSON.stringify(user));
             this.showAlert(alertBox, 'Login realizado! Redirecionando...', 'success');
-            setTimeout(() => window.location.href = 'canvas.html', 1000);
+            setTimeout(() => window.location.href = 'projects.html', 1000);
         } else {
             this.showAlert(alertBox, 'E-mail ou senha incorretos.', 'error');
         }
