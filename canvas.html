@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Canvas - Agiliza Aí</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/canvas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header (Com lógica de usuário logado via JS) -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+    <img src="assets/img/logo.png" alt="Agiliza Aí" class="logo-img">
+</div>
+                <!-- O menu será preenchido dinamicamente pelo auth.js se estiver logado -->
+                <div class="nav-links" id="navLinks">
+                    <!-- Conteúdo injetado via JS -->
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                    <button id="btnBackProjects" class="btn btn-secondary btn-sm">
+                     <i class="fas fa-arrow-left"></i> Voltar
+                     </button>
+
+                       <span id="userNameDisplay">Carregando...</span>
+                  <a href="#" id="logoutBtn" class="btn btn-secondary btn-sm">Sair</a>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barra de Ferramentas do Canvas -->
+    <div class="canvas-toolbar">
+        <div class="container toolbar-content">
+            <div class="project-info">
+                <input type="text" class="project-title" value="Meu Projeto Sem Título" placeholder="Nome do Projeto">
+            </div>
+            <div class="actions">
+    <button id="btnSaveProject" class="btn btn-secondary"><i class="fas fa-save"></i> Salvar</button>     
+    <button id="savePNG" class="btn btn-secondary"> <i class="fas fa-save"></i> Salvar PNG</button>
+    <button id="exportJSON" class="btn btn-primary"> <i class="fas fa-download"></i> Exportar JSON</button>
+    <button id="exportPDF" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
+</div>
+
+        </div>
+    </div>
+
+    <!-- O Grid do Canvas (Layout Base) -->
+    <div class="canvas-wrapper">
+        <div class="canvas-grid">
+            <!-- 1. Parcerias Principais -->
+            <div class="canvas-block block-kp">
+                <div class="block-header">
+                    <i class="fas fa-handshake"></i> Parcerias Principais
+                </div>
+                <div class="block-content" contenteditable="true">
+                    <!-- Post-its virão aqui -->
+                </div>
+            </div>
+
+            <!-- 2. Atividades Chave -->
+            <div class="canvas-block block-ka">
+                <div class="block-header">
+                    <i class="fas fa-tasks"></i> Atividades Chave
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 3. Recursos Principais -->
+            <div class="canvas-block block-kr">
+                <div class="block-header">
+                    <i class="fas fa-gem"></i> Recursos Principais
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 4. Proposta de Valor -->
+            <div class="canvas-block block-vp">
+                <div class="block-header">
+                    <i class="fas fa-gift"></i> Proposta de Valor
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 5. Relacionamento com Cliente -->
+            <div class="canvas-block block-cr">
+                <div class="block-header">
+                    <i class="fas fa-heart"></i> Relacionamento
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 6. Canais -->
+            <div class="canvas-block block-ch">
+                <div class="block-header">
+                    <i class="fas fa-truck"></i> Canais
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 7. Segmentos de Clientes -->
+            <div class="canvas-block block-cs">
+                <div class="block-header">
+                    <i class="fas fa-users"></i> Segmentos de Clientes
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 8. Estrutura de Custos -->
+            <div class="canvas-block block-cst">
+                <div class="block-header">
+                    <i class="fas fa-tags"></i> Estrutura de Custos
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+
+            <!-- 9. Fontes de Receita -->
+            <div class="canvas-block block-rs">
+                <div class="block-header">
+                    <i class="fas fa-cash-register"></i> Fontes de Receita
+                </div>
+                <div class="block-content" contenteditable="true"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/canvas.js"></script>
+    
+    <script>
+        // Verificação imediata de autenticação
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Auth !== 'undefined') {
+                Auth.requireAuth(); // Redireciona se não estiver logado
+                
+                // Atualiza nome do usuário no header
+                const user = Auth.getCurrentUser();
+                if (user) {
+                    document.getElementById('userNameDisplay').textContent = `Olá, ${user.name.split(' ')[0]}`;
+                }
+            }
+        });
+    </script>
+
+    <script>
+document.getElementById("exportPDF").addEventListener("click", async () => {
+    const area = document.querySelector(".canvas-grid"); // pega todo o canvas
+
+    // Captura visual com qualidade dobrada
+    const canvas = await html2canvas(area, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let posY = 0;
+
+    // Caso a altura da captura seja maior que a página A4
+    while (posY < imgHeight) {
+        pdf.addImage(
+            imgData,
+            "PNG",
+            0,
+            -posY,
+            imgWidth,
+            imgHeight
+        );
+
+        posY += pageHeight;
+
+        if (posY < imgHeight) pdf.addPage();
+    }
+
+    pdf.save("canvas.pdf");
+});
+</script>
+
+<script>
+document.getElementById("savePNG").addEventListener("click", async () => {
+    const area = document.querySelector(".canvas-grid");
+
+    // captura visual
+    const canvas = await html2canvas(area, { scale: 2 });
+
+    // converte em imagem PNG
+    const imgData = canvas.toDataURL("image/png");
+
+    // cria link invisível para download
+    const link = document.createElement("a");
+    link.href = imgData;
+    link.download = "canvas.png"; // nome do arquivo
+    link.click();
+});
+</script>
+<script>
+document.getElementById("exportJSON").addEventListener("click", () => {
+    
+    // Seleciona todos os blocos do seu canvas
+    const blocks = document.querySelectorAll(".canvas-block");
+
+    let data = {};
+
+    blocks.forEach(block => {
+        const title = block.querySelector(".block-header").innerText.trim();
+        const content = block.querySelector(".block-content").innerText.trim();
+
+        // salva no JSON usando o título como chave
+        data[title] = content;
+    });
+
+    // transforma em JSON formatado
+    const jsonString = JSON.stringify(data, null, 4);
+
+    // cria arquivo para baixar
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "canvas.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+});
+</script>
+<script>
+document.getElementById("btnBackProjects").addEventListener("click", () => {
+    window.location.href = "projects.html";
+});
+</script>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+</html>

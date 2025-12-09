@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Projetos - Agiliza Aí</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/projects.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+    <img src="assets/img/logo.png" alt="Agiliza Aí" class="logo-img">
+</div>
+                <div class="nav-links">
+                    <button id="btnGoHome" class="btn btn-primary btn-sm" style="margin-right: 10px;">
+                <i class="fas fa-home"></i> Início
+                  </button>
+
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Sair</button>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container project-container">
+        <div class="page-header">
+            <h2><i class="fas fa-folder-open"></i> Meus Projetos</h2>
+            <p>Gerencie seus quadros estratégicos</p>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+            <div class="project-card create-new" id="btnNewProject">
+                <div class="icon-plus">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <h3>Novo Projeto</h3>
+                <p>Iniciar um canvas em branco</p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Agiliza Aí. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/projects.js"></script> 
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Auth.requireAuth();
+
+            document.getElementById("btnGoHome").addEventListener("click", () => {
+                 window.location.href = "index.html";
+            });
+
+        });
+    </script>
+</body>
+</html>
